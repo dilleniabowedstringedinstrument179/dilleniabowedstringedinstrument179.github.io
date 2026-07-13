@@ -1,54 +1,46 @@
-HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to the team</title>
+    <title>About the Team | Motorsport</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Base Styles using Team Colors: Black & White */
+        /* Core Team Styles */
         body {
             font-family: 'Oswald', Arial, sans-serif;
             margin: 0;
-            padding: 0; /* Removed default padding so header can span full width */
-            background-color: #000000; /* Pure Black Background */
-            color: #ffffff; /* Pure White Text */
+            padding: 0;
+            background-color: #000000;
+            color: #ffffff;
             letter-spacing: 0.5px;
         }
 
-        /* Permanent Transparent Top Navigation Bar */
+        /* Sticky Header (Identical across all pages) */
         .top-navbar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            
-            /* Layout styling */
             display: flex;
-            justify-content: center; /* Centers the links across the page */
+            justify-content: center;
             align-items: center;
             height: 70px;
-            
-            /* Semi-transparent pure black overlay + futuristic blur effect */
             background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Nav Bar Links Containers */
         .nav-links {
             display: flex;
-            gap: 20px; /* Space between each tab */
+            gap: 20px;
         }
 
-        /* Navigation Links Styling */
         .nav-links a {
             text-decoration: none;
             font-size: 16px;
@@ -67,7 +59,7 @@ HTML
             color: #Da2e29;
         }
 
-        /* Hover effect - Mechanical kinetic underline in Team Red */
+        /* Underline animation */
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -91,9 +83,9 @@ HTML
             color: #Da2e29;
         }
 
-        /* Main Content Area - Pushed down so it doesn't hide behind the navbar */
+        /* Content layouts helper */
         main {
-            padding: 120px 50px 50px 50px; /* Top padding accounts for 70px header + 50px spacing */
+            padding: 120px 50px 50px 50px;
         }
 
         h1 {
@@ -101,19 +93,20 @@ HTML
             text-transform: uppercase;
             font-weight: 700;
             font-style: italic;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
             letter-spacing: -1px;
             color: #ffffff;
-            border-left: 5px solid #Da2e29; /* Custom Team Red Accent */
+            border-left: 5px solid #Da2e29;
             padding-left: 15px;
         }
 
-        p {
+        .content-block {
+            max-width: 800px;
+            margin-top: 30px;
+            font-family: Arial, sans-serif; /* Clean, standard sans-serif for body copy readability */
+            color: #d1d5db;
+            line-height: 1.6;
             font-size: 1.1rem;
-            color: #a0a0a0; 
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding-left: 20px;
         }
     </style>
 </head>
@@ -121,8 +114,8 @@ HTML
 
     <nav class="top-navbar">
         <div class="nav-links">
-            <a href="index.html" class="active">Home</a>
-            <a href="about.html">About the team</a>
+            <a href="index.html">Home</a>
+            <a href="about.html" class="active">About the team</a>
             <a href="departments.html">Departments</a>
             <a href="sponsors.html">Sponsors</a>
             <a href="timeline.html">Timeline</a>
@@ -131,8 +124,10 @@ HTML
     </nav>
 
     <main>
-        <h1>Welcome to the team</h1>
-        <p>// Currently under construction.</p>
+        <h1>About the Team</h1>
+        <div class="content-block">
+            <p>This is where your team introduction, driver lineup, or vehicle engineering stats will go. The layout preserves the custom racing font for headers and drops down into a clean, highly legible font block for long-form reading.</p>
+        </div>
     </main>
 
 </body>
