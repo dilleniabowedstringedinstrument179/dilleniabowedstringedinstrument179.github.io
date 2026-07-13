@@ -3,104 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to the team</title>
+    <title>Home | Motorsport Team</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Base Setup */
+        /* Core Layout Elements */
         body {
             font-family: 'Oswald', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #000000; /* Baseline fallback */
+            background-color: #000000;
             color: #ffffff;
             letter-spacing: 0.5px;
-            min-height: 100vh;
+            min-height: 180vh; /* Provides necessary vertical runway for scrolling transitions */
             position: relative;
             overflow-x: hidden;
         }
 
         /* -------------------------------------------------------------
-           GEOMETRIC PADDOCK BACKGROUND LAYERS
+           AMBIEINT BACKGROUND LAYERS
            ------------------------------------------------------------- */
-        
-        /* Base subtle gradient across the entire canvas */
         .paddock-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: linear-gradient(135deg, #07080a 0%, #000000 100%);
-            z-index: -3;
+            background: linear-gradient(135deg, #040507 0%, #000000 100%);
+            z-index: -10;
         }
 
-        /* Ambient glowing red wash emerging from the bottom right corner */
         .glow-wash {
             position: fixed;
-            bottom: -20%;
+            bottom: -30%;
             right: -10%;
-            width: 70vw;
-            height: 70vh;
+            width: 80vw;
+            height: 80vh;
             background: radial-gradient(circle, rgba(218, 46, 41, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        /* Sharp, geometric layout stripe running down the right-hand canvas */
-        .geo-shard {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 45vw;
-            height: 100vh;
-            /* Gradient shift matching team red fading down into shadow black */
-            background: linear-gradient(180deg, rgba(218, 46, 41, 0.25) 0%, rgba(12, 14, 18, 0.6) 65%, rgba(0, 0, 0, 0.9) 100%);
-            /* Creates the crisp, sharp dynamic angular slope */
-            clip-path: polygon(35% 0%, 100% 0%, 100% 100%, 0% 100%);
-            /* Box shadow emulation via backdrop filter blending layers */
-            backdrop-filter: brightness(0.9) contrast(1.1);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* Secondary geometric accent adding depth behind the primary shard */
-        .geo-shard-accent {
-            position: fixed;
-            top: 0;
-            right: 10vw;
-            width: 40vw;
-            height: 100vh;
-            background: rgba(218, 46, 41, 0.04);
-            clip-path: polygon(45% 0%, 100% 0%, 80% 100%, 20% 100%);
-            z-index: -2;
+            z-index: -9;
             pointer-events: none;
         }
 
         /* -------------------------------------------------------------
-           NAVIGATION & CONTENT
+           8-LAYER GEOMETRIC FRACTURES (THE PADDOCK SHARDS)
            ------------------------------------------------------------- */
+        .geo-shard {
+            position: fixed;
+            top: 0;
+            height: 100vh;
+            pointer-events: none;
+            will-change: transform, opacity;
+            transition: transform 0.15s cubic-bezier(0.1, 0.8, 0.2, 1), opacity 0.15s linear;
+        }
 
-        /* Permanent Transparent Top Navigation Bar */
+        /* SHARD 1: Deep Red Structural Horizon */
+        .shard-1 {
+            right: 0;
+            width: 65vw;
+            background: rgba(218, 46, 41, 0.03);
+            clip-path: polygon(45% 0%, 100% 0%, 90% 100%, 20% 100%);
+            z-index: -8;
+        }
+
+        /* SHARD 2: Dark Charcoal Shield */
+        .shard-2 {
+            right: 8vw;
+            width: 50vw;
+            background: rgba(10, 11, 14, 0.8);
+            border-left: 1px solid rgba(255, 255, 255, 0.02);
+            clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 10% 100%);
+            z-index: -7;
+        }
+
+        /* SHARD 3: Secondary Red Ambient Track */
+        .shard-3 {
+            right: 2vw;
+            width: 42vw;
+            background: linear-gradient(180deg, rgba(218, 46, 41, 0.1) 0%, rgba(0, 0, 0, 0) 80%);
+            clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 30% 100%);
+            z-index: -6;
+        }
+
+        /* SHARD 4: Heavy Tech Core Wall */
+        .shard-4 {
+            right: 0;
+            width: 35vw;
+            background: #07080a;
+            border-left: 1px solid rgba(218, 46, 41, 0.1);
+            clip-path: polygon(40% 0%, 100% 0%, 100% 100%, 0% 100%);
+            z-index: -5;
+        }
+
+        /* SHARD 5: High-Contrast Blade Accent */
+        .shard-5 {
+            right: 12vw;
+            width: 20vw;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.01) 0%, rgba(218, 46, 41, 0.05) 100%);
+            clip-path: polygon(0% 0%, 100% 0%, 60% 100%, 20% 100%);
+            z-index: -4;
+        }
+
+        /* SHARD 6: Core Primary Team Red Stripe */
+        .shard-6 {
+            right: 0;
+            width: 25vw;
+            background: linear-gradient(180deg, rgba(218, 46, 41, 0.22) 0%, rgba(15, 3, 3, 0.6) 60%, rgba(0, 0, 0, 0.95) 100%);
+            clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 5% 100%);
+            backdrop-filter: brightness(0.95) contrast(1.05);
+            z-index: -3;
+        }
+
+        /* SHARD 7: Outer Paddock Fractured Shadow Split */
+        .shard-7 {
+            right: -3vw;
+            width: 18vw;
+            background: rgba(5, 6, 8, 0.9);
+            border-left: 1px solid rgba(255, 255, 255, 0.04);
+            clip-path: polygon(45% 0%, 100% 0%, 80% 100%, 0% 100%);
+            z-index: -2;
+        }
+
+        /* SHARD 8: Foreground Speed Vignette Glow */
+        .shard-8 {
+            right: -8vw;
+            width: 15vw;
+            background: linear-gradient(90deg, rgba(218, 46, 41, 0.12) 0%, rgba(0, 0, 0, 0) 100%);
+            clip-path: polygon(60% 0%, 100% 0%, 50% 100%, 0% 100%);
+            z-index: -1;
+        }
+
+        /* -------------------------------------------------------------
+           NAVIGATION BAR STYLING
+           ------------------------------------------------------------- */
         .top-navbar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            
             display: flex;
-            justify-content: center; 
+            justify-content: center;
             align-items: center;
             height: 70px;
-            
-            /* Glassmorphism over the changing geometric shapes */
             background: rgba(0, 0, 0, 0.65);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
@@ -149,9 +198,13 @@
             color: #Da2e29;
         }
 
-        /* Main Content Area */
+        /* -------------------------------------------------------------
+           PAGE CONTENT MAIN WRAPPER
+           ------------------------------------------------------------- */
         main {
             padding: 140px 50px 50px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
             position: relative;
             z-index: 10;
         }
@@ -166,26 +219,36 @@
             color: #ffffff;
             border-left: 6px solid #Da2e29;
             padding-left: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
         }
 
-        p {
+        .subtitle {
             font-size: 1.1rem;
-            color: #b0b5c0; 
+            color: #b0b5c0;
             text-transform: uppercase;
             letter-spacing: 2px;
             padding-left: 26px;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            margin-bottom: 50px;
         }
     </style>
 </head>
 <body>
 
+    <!-- 8-Layer Geometric Paddock Elements -->
     <div class="paddock-bg"></div>
     <div class="glow-wash"></div>
-    <div class="geo-shard-accent"></div>
-    <div class="geo-shard"></div>
+    
+    <div class="geo-shard shard-1" id="shard1"></div>
+    <div class="geo-shard shard-2" id="shard2"></div>
+    <div class="geo-shard shard-3" id="shard3"></div>
+    <div class="geo-shard shard-4" id="shard4"></div>
+    <div class="geo-shard shard-5" id="shard5"></div>
+    <div class="geo-shard shard-6" id="shard6"></div>
+    <div class="geo-shard shard-7" id="shard7"></div>
+    <div class="geo-shard shard-8" id="shard8"></div>
 
+    <!-- Navigation Header -->
     <nav class="top-navbar">
         <div class="nav-links">
             <a href="index.html" class="active">Home</a>
@@ -197,10 +260,42 @@
         </div>
     </nav>
 
+    <!-- Main Content Grid Component -->
     <main>
         <h1>Welcome to the team</h1>
-        <p>// Currently under construction.</p>
+        <div class="subtitle">// Currently under construction.</div>
     </main>
+
+    <!-- 8-Channel Parallax Scroll Engine Script -->
+    <script>
+        function updateMultiLayerPaddock() {
+            const totalScrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (totalScrollableHeight <= 0) return;
+            
+            // Map scroll position to a clean 0 to 1 ratio value
+            const scrollPercent = window.scrollY / totalScrollableHeight;
+
+            // Apply distinct calculated transforms to each fracture element simultaneously
+            document.getElementById('shard1').style.transform = `translateX(${scrollPercent * -45}px) skewX(${scrollPercent * 1}deg)`;
+            document.getElementById('shard2').style.transform = `translateX(${scrollPercent * 25}px)`;
+            document.getElementById('shard3').style.transform = `translateX(${scrollPercent * -15}px) translateY(${scrollPercent * 20}px)`;
+            document.getElementById('shard4').style.transform = `translateX(${scrollPercent * 35}px) scaleX(${1 + scrollPercent * 0.03})`;
+            document.getElementById('shard5').style.transform = `translateX(${scrollPercent * -60}px)`;
+            
+            // Center red highlight tracks opacity and horizontal glide
+            const s6 = document.getElementById('shard6');
+            s6.style.transform = `translateX(${scrollPercent * -30}px)`;
+            s6.style.opacity = `${0.7 + (scrollPercent * 0.3)}`;
+            
+            document.getElementById('shard7').style.transform = `translateX(${scrollPercent * 15}px)`;
+            document.getElementById('shard8').style.transform = `translateX(${scrollPercent * -75}px) skewX(${scrollPercent * -2}deg)`;
+        }
+
+        // Window interaction event connections
+        window.addEventListener('scroll', updateMultiLayerPaddock);
+        window.addEventListener('resize', updateMultiLayerPaddock);
+        document.addEventListener("DOMContentLoaded", updateMultiLayerPaddock);
+    </script>
 
 </body>
 </html>
