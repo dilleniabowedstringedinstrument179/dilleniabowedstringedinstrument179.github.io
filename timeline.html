@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline | Motorsport</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Core Team Styles */
+        body {
+            font-family: 'Oswald', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            overflow-x: hidden;
+        }
+
+        /* Sticky Header */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a {
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            font-style: italic;
+            text-transform: uppercase;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            padding: 10px 15px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .nav-links a.active { color: #Da2e29; }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 100%; transform: scaleX(0); height: 2px;
+            bottom: 0; left: 0; background-color: #Da2e29; transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+        .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); transform-origin: bottom left; }
+        .nav-links a:hover { color: #Da2e29; }
+
+        /* Timeline Main Wrapper */
+        main {
+            padding: 120px 20px 100px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-style: italic;
+            margin-bottom: 60px;
+            letter-spacing: -1px;
+            color: #ffffff;
+            border-left: 5px solid #Da2e29;
+            padding-left: 15px;
+        }
+
+        /* The Central Timeline Track Container */
+        .timeline-container {
+            position: relative;
+            margin: 40px auto;
+            padding: 40px 0;
+        }
+
+        /* The actual vertical line with transparent fade top/bottom */
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: #ffffff;
+            
+            /* Transparent at top/bottom, solid in middle */
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 85%, rgba(255,255,255,0) 100%);
+            
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            z-index: 1;
+        }
+
+        /* Timeline Blocks (Rows) */
+        .timeline-block {
+            position: relative;
+            width: 100%;
+            margin-bottom: 60px;
+            display: flex;
+        }
+
+        /* Alternate sides for blocks */
+        .timeline-block:nth-child(even) { justify-content: flex-end; }
+        .timeline-block:nth-child(odd) { justify-content: flex-start; }
+
+        /* Interactive Text Box / Expandable Card */
+        .timeline-card {
+            position: relative;
+            width: 44%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 5;
+        }
+
+        .timeline-card:hover {
+            border-color: #Da2e29;
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-2px);
+        }
+
+        /* Intersecting Date Node on the Line */
+        .timeline-date-node {
+            position: absolute;
+            left: 50%;
+            top: 30px;
+            transform: translateX(-50%);
+            background-color: #000000;
+            border: 2px solid #Da2e29; /* Team Red Ring */
+            color: #ffffff;
+            font-weight: 700;
+            font-style: italic;
+            font-size: 1.2rem;
+            padding: 4px 14px;
+            border-radius: 20px;
+            z-index: 10;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(218, 46, 41, 0.4);
+        }
+
+        /* Card Typography */
+        .card-title {
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-style: italic;
+            margin: 0 0 10px 0;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Micro Expand indicator (+) */
+        .card-title::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: #Da2e29;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-card.expanded .card-title::after {
+            transform: rotate(45deg); /* Turns + into an X */
+        }
+
+        .card-preview {
+            font-family: Arial, sans-serif;
+            color: #a0a0a0;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Hidden Panel Content */
+        .card-full-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.3s ease;
+            font-family: Arial, sans-serif;
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        /* Active Expanded State styles */
+        .timeline-card.expanded {
+            background: rgba(218, 46, 41, 0.04);
+            border-color: #Da2e29;
+        }
+
+        .timeline-card.expanded .card-full-content {
+            max-height: 500px; /* Big enough to fit text safely */
+            margin-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        /* Responsive design for tablets/phones */
+        @media screen and (max-width: 768px) {
+            .timeline-container::after { left: 30px; }
+            .timeline-date-node { left: 30px; transform: translateX(-50%); top: -45px; }
+            .timeline-block { width: 100%; margin-bottom: 80px; }
+            .timeline-block:nth-child(even), .timeline-block:nth-child(odd) { justify-content: flex-end; }
+            .timeline-card { width: 85%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <nav class="top-navbar">
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About the team</a>
+            <a href="departments.html">Departments</a>
+            <a href="sponsors.html">Sponsors</a>
+            <a href="timeline.html" class="active">Timeline</a>
+            <a href="contact.html">Contact us</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <h1>Our Journey</h1>
+
+        <div class="timeline-container">
+
+            <!-- EVENT 1 -->
+            <div class="timeline-block">
+                <div class="timeline-date-node">2026</div>
+                <div class="timeline-card" onclick="toggleCard(this)">
+                    <h3 class="card-title">Championship Victory</h3>
+                    <p class="card-preview">Secured first place podium standing in the season finale event.</p>
+                    <div class="card-full-content">
+                        Through rigorous technical developments and flawless telemetry tracking on race day, the engineering and driving segments synchronized perfectly to secure the title by a 14-point margin.
+                    </div>
+                </div>
+            </div>
+
+            <!-- EVENT 2 -->
+            <div class="timeline-block">
+                <div class="timeline-date-node">2025</div>
+                <div class="timeline-card" onclick="toggleCard(this)">
+                    <h3 class="card-title">EV Powertrain Overhaul</h3>
+                    <p class="card-preview">Redesigned electric configuration internals from scratch.</p>
+                    <div class="card-full-content">
+                        Migrated to custom-machined planetary gearboxes and an updated high-density cooling manifold system, decreasing baseline vehicle weight by 8.4kg and boosting torque out-efficiency.
+                    </div>
+                </div>
+            </div>
+
+            <!-- EVENT 3 -->
+            <div class="timeline-block">
+                <div class="timeline-date-node">2024</div>
+                <div class="timeline-card" onclick="toggleCard(this)">
+                    <h3 class="card-title">Team Foundations</h3>
+                    <p class="card-preview">The initial assembly of engineering nodes and baseline garage setup.</p>
+                    <div class="card-full-content">
+                        Established our primary manufacturing facility workspace, gathered our initial core squad roster across five sub-departments, and drafted our first blueprints.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Simple JavaScript to toggle expandable sections -->
+    <script>
+        function toggleCard(card) {
+            card.classList.toggle('expanded');
+        }
+    </script>
+
+</body>
+</html>
