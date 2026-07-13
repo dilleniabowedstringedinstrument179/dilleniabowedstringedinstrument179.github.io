@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About the Team | Motorsport</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Core Team Styles */
+        body {
+            font-family: 'Oswald', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        /* Sticky Header (Identical across all pages) */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            font-style: italic;
+            text-transform: uppercase;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            padding: 10px 15px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        /* Active tab indicator (Custom Team Red) */
+        .nav-links a.active {
+            color: #Da2e29;
+        }
+
+        /* Underline animation */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #Da2e29;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .nav-links a:hover {
+            color: #Da2e29;
+        }
+
+        /* Content layouts helper */
+        main {
+            padding: 120px 50px 50px 50px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-style: italic;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            color: #ffffff;
+            border-left: 5px solid #Da2e29;
+            padding-left: 15px;
+        }
+
+        .content-block {
+            max-width: 800px;
+            margin-top: 30px;
+            font-family: Arial, sans-serif; /* Clean, standard sans-serif for body copy readability */
+            color: #d1d5db;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-navbar">
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html" class="active">About the team</a>
+            <a href="departments.html">Departments</a>
+            <a href="sponsors.html">Sponsors</a>
+            <a href="timeline.html">Timeline</a>
+            <a href="contact.html">Contact us</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>The Departments</h1>
+        <div class="content-block">
+            <p>Electrical, business yada yada</p>
+        </div>
+    </main>
+
+</body>
+</html>
