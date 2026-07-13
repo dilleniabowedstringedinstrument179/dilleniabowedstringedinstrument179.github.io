@@ -1,0 +1,254 @@
+To showcase your sponsors effectively, you want a layout that cleanly displays their logos grouped by their sponsorship level. A great way to structure this is by stacking the tiers vertically—placing the high-value Platinum and Gold tiers at the top with larger logo sizes, down to Supporter tiers with smaller, grid-based logos.
+
+Here is the code tailored specifically for your sponsors.html page.
+
+HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsors | Motorsport</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Core Team Styles */
+        body {
+            font-family: 'Oswald', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        /* Sticky Header */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links { display: flex; gap: 20px; }
+
+        .nav-links a {
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            font-style: italic;
+            text-transform: uppercase;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            padding: 10px 15px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links a.active { color: #Da2e29; }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #Da2e29;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .nav-links a:hover { color: #Da2e29; }
+
+        /* Main Content & Tier List Layout */
+        main {
+            padding: 120px 50px 50px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-style: italic;
+            margin-bottom: 40px;
+            letter-spacing: -1px;
+            color: #ffffff;
+            border-left: 5px solid #Da2e29;
+            padding-left: 15px;
+        }
+
+        /* Sponsor Tier Box Container */
+        .tier-section {
+            margin-bottom: 50px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 4px;
+        }
+
+        /* Tier Headers */
+        .tier-header {
+            font-size: 2rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-style: italic;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Specific Color Accents for Tiers */
+        .platinum .tier-header { color: #e5e4e2; border-bottom: 2px solid #e5e4e2; }
+        .gold .tier-header { color: #d4af37; border-bottom: 2px solid #d4af37; }
+        .silver .tier-header { color: #aaa9ad; border-bottom: 2px solid #aaa9ad; }
+        .bronze .tier-header { color: #cd7f32; border-bottom: 2px solid #cd7f32; }
+        .supporter .tier-header { color: #ffffff; border-bottom: 2px solid #Da2e29; }
+
+        /* Grid Framework for Displaying Logos */
+        .logo-grid {
+            display: grid;
+            gap: 25px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Top tiers have massive prominent spots, lower tiers have compact grids */
+        .platinum .logo-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+        .gold .logo-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+        .silver .logo-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+        .bronze .logo-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+        .supporter .logo-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+
+        /* Individual Card Box Style for a Logo */
+        .sponsor-card {
+            background-color: #0c0e12;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            text-align: center;
+            border-radius: 4px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .sponsor-card:hover {
+            transform: scale(1.03);
+            border-color: #Da2e29;
+        }
+
+        /* Ensures sponsor logos scale properly and don't burst out of text containers */
+        .sponsor-card img {
+            max-width: 100%;
+            height: auto;
+            max-height: 120px;
+            object-fit: contain;
+            filter: grayscale(20%); /* Blends dynamic colors nicely until hovered */
+            transition: filter 0.2s ease;
+        }
+        
+        .sponsor-card:hover img {
+            filter: grayscale(0%);
+        }
+
+        .sponsor-name {
+            font-size: 1.1rem;
+            margin-top: 15px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #a0a0a0;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-navbar">
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About the team</a>
+            <a href="departments.html">Departments</a>
+            <a href="sponsors.html" class="active">Sponsors</a>
+            <a href="timeline.html">Timeline</a>
+            <a href="contact.html">Contact us</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Our Partners</h1>
+
+        <section class="tier-section platinum">
+            <div class="tier-header">// Platinum Partner</div>
+            <div class="logo-grid">
+                <div class="sponsor-card">
+                    <img src="images/placeholder-logo.png" alt="Sponsor Logo">
+                    <div class="sponsor-name">Primary Sponsor Title</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tier-section gold">
+            <div class="tier-header">// Gold Partners</div>
+            <div class="logo-grid">
+                <div class="sponsor-card">
+                    <img src="images/placeholder-logo.png" alt="Sponsor Logo">
+                    <div class="sponsor-name">Gold Sponsor Tech</div>
+                </div>
+                <div class="sponsor-card">
+                    <img src="images/placeholder-logo.png" alt="Sponsor Logo">
+                    <div class="sponsor-name">Gold Sponsor Performance</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tier-section silver">
+            <div class="tier-header">// Silver Partners</div>
+            <div class="logo-grid">
+                <div class="sponsor-card">
+                    <img src="images/placeholder-logo.png" alt="Sponsor Logo">
+                    <div class="sponsor-name">Silver Engineering</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tier-section bronze">
+            <div class="tier-header">// Bronze Partners</div>
+            <div class="logo-grid">
+                <div class="sponsor-card">
+                    <img src="images/placeholder-logo.png" alt="Sponsor Logo">
+                    <div class="sponsor-name">Bronze Logistics</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tier-section supporter">
+            <div class="tier-header">// Team Supporters</div>
+            <div class="logo-grid">
+                <div class="sponsor-card">
+                    <img src="images/placeholder-logo.png" alt="Sponsor Logo">
+                    <div class="sponsor-name">Supporter Brand A</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
